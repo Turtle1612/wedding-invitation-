@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thiệp Cưới Online</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- FX Layers -->
+  <canvas id="fireworks" aria-hidden="true"></canvas>
+  <div class="fx fx-hearts" aria-hidden="true"></div>
+  <div class="fx fx-sparkles" aria-hidden="true"></div>
+
+  <!-- Audio -->
+  <audio id="openSfx" preload="auto" src="open.mp3"></audio>
+  <audio id="bgm" preload="auto" src="happy-wedding.mp3" loop></audio>
+
+  <!-- Cover (Closed card) -->
+  <main id="cover" class="cover" aria-label="Thiệp cưới (đang đóng)">
+    <section class="card3d" role="region" aria-label="Mặt thiệp">
+      <div class="card-face card-front">
+        <div class="seal" aria-hidden="true"></div>
+        <div class="front-content">
+          <p class="tiny">TRÂN TRỌNG KÍNH MỜI</p>
+          <h1 class="names">
+            <span id="coverBride">CÔ DÂU</span>
+            <span class="amp">&</span>
+            <span id="coverGroom">CHÚ RỂ</span>
+          </h1>
+          <p class="date-time">
+            <span id="coverDate">20:00 • 20/02/2026</span>
+            <span class="dot">•</span>
+            <span id="coverVenue">TP. Hồ Chí Minh</span>
+          </p>
+
+          <button id="btnOpen" class="btn btn-primary" type="button">
+            Mở thiệp
+          </button>
+
+          <p class="hint">Gợi ý: Bật âm lượng để trải nghiệm trọn vẹn.</p>
+        </div>
+      </div>
+
+      <div class="card-face card-back">
+        <div class="back-content">
+          <p class="tiny">WELCOME</p>
+          <h2 class="script">Happy Wedding</h2>
+          <p class="muted">Đang mở thiệp...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Invitation (Opened content) -->
+  <div id="invitation" class="invitation hidden" aria-label="Nội dung thiệp cưới">
+    <header class="hero" id="top">
+      <div class="hero-inner">
+        <p class="badge">Thiệp Mời Lễ Thành Hôn</p>
+        <h1 class="hero-names">
+          <span id="brideName">Nguyễn Thị A</span>
+          <span class="amp">&</span>
+          <span id="groomName">Trần Văn B</span>
+        </h1>
+
+        <p class="hero-sub">
+          <span id="eventDateText">Chủ nhật • 20/02/2026</span>
+          <span class="dot">•</span>
+          <span id="eventTimeText">18:00</span>
+        </p>
+
+        <div class="countdown" aria-label="Đếm ngược đến ngày cưới">
+          <div class="cd-item"><div id="cdDays" class="cd-num">00</div><div class="cd-lbl">Ngày</div></div>
+          <div class="cd-item"><div id="cdHours" class="cd-num">00</div><div class="cd-lbl">Giờ</div></div>
+          <div class="cd-item"><div id="cdMins" class="cd-num">00</div><div class="cd-lbl">Phút</div></div>
+          <div class="cd-item"><div id="cdSecs" class="cd-num">00</div><div class="cd-lbl">Giây</div></div>
+        </div>
+
+        <div class="hero-actions">
+          <button id="btnToggleMusic" class="btn" type="button">Tắt nhạc</button>
+          <button id="btnScrollHint" class="btn btn-ghost" type="button">Tắt auto-scroll</button>
+        </div>
+
+        <p class="auto-note" id="autoNote">
+          Thiệp đang tự cuộn để bạn xem toàn bộ nội dung. Chạm/scroll bất kỳ để tắt.
+        </p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Album Ảnh Cưới</h2>
+        <p class="section-desc">Bạn có thể thay ảnh bằng cách đổi <code>data-src</code> sang ảnh của bạn.</p>
+
+        <div class="gallery" id="gallery" aria-label="Album ảnh cưới">
+          <!-- Placeholders; replace data-src with your images (e.g. album/1.jpg) -->
+          <button class="photo" data-src="album/1.jpg" type="button" aria-label="Ảnh 1">
+            <span class="ph"></span>
+          </button>
+          <button class="photo" data-src="album/2.jpg" type="button" aria-label="Ảnh 2">
+            <span class="ph"></span>
+          </button>
+          <button class="photo" data-src="album/3.jpg" type="button" aria-label="Ảnh 3">
+            <span class="ph"></span>
+          </button>
+          <button class="photo" data-src="album/4.jpg" type="button" aria-label="Ảnh 4">
+            <span class="ph"></span>
+          </button>
+          <button class="photo" data-src="album/5.jpg" type="button" aria-label="Ảnh 5">
+            <span class="ph"></span>
+          </button>
+          <button class="photo" data-src="album/6.jpg" type="button" aria-label="Ảnh 6">
+            <span class="ph"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <h2 class="section-title">Gia Đình Hai Bên</h2>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h3>Nhà trai</h3>
+            <p class="line"><strong>Ông:</strong> <span id="groomGrandpa">Ông ...</span></p>
+            <p class="line"><strong>Bà:</strong> <span id="groomGrandma">Bà ...</span></p>
+            <p class="line"><strong>Cha:</strong> <span id="groomDad">Ông ...</span></p>
+            <p class="line"><strong>Mẹ:</strong> <span id="groomMom">Bà ...</span></p>
+            <p class="line"><strong>Địa chỉ:</strong> <span id="groomAddress">Số ..., Phường ..., Quận ..., TP ...</span></p>
+          </div>
+
+          <div class="panel">
+            <h3>Nhà gái</h3>
+            <p class="line"><strong>Ông:</strong> <span id="brideGrandpa">Ông ...</span></p>
+            <p class="line"><strong>Bà:</strong> <span id="brideGrandma">Bà ...</span></p>
+            <p class="line"><strong>Cha:</strong> <span id="brideDad">Ông ...</span></p>
+            <p class="line"><strong>Mẹ:</strong> <span id="brideMom">Bà ...</span></p>
+            <p class="line"><strong>Địa chỉ:</strong> <span id="brideAddress">Số ..., Phường ..., Quận ..., TP ...</span></p>
+          </div>
+        </div>
+
+        <div class="announce">
+          <p class="announce-text">“Trân trọng báo tin lễ thành hôn của con chúng tôi”</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel highlight">
+            <p class="tiny">CHÚ RỂ</p>
+            <h3 id="groomFullName">Trần Văn B</h3>
+            <p class="muted">
+              <span id="groomRole">Út nam</span>
+              <span class="dot">•</span>
+              Con ông <span id="groomParentsInline">...</span>
+            </p>
+          </div>
+
+          <div class="panel highlight">
+            <p class="tiny">CÔ DÂU</p>
+            <h3 id="brideFullName">Nguyễn Thị A</h3>
+            <p class="muted">
+              <span id="brideRole">Út nữ</span>
+              <span class="dot">•</span>
+              Con ông <span id="brideParentsInline">...</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Thời Gian & Địa Điểm Tổ Chức</h2>
+
+        <div class="event-cards">
+          <article class="event-card">
+            <h3>Lễ Vu Quy (Nhà gái)</h3>
+            <p class="line"><strong>Thời gian:</strong> <span id="brideCeremonyTime">08:00 • 20/02/2026</span></p>
+            <p class="line"><strong>Địa chỉ:</strong> <span id="brideCeremonyAddr">...</span></p>
+
+            <div class="map-wrap">
+              <iframe id="mapBride" title="Bản đồ nhà gái" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=Ho%20Chi%20Minh%20City&output=embed"></iframe>
+            </div>
+
+            <a id="mapBrideLink" class="btn btn-small" target="_blank" rel="noopener">
+              Mở Google Maps
+            </a>
+          </article>
+
+          <article class="event-card">
+            <h3>Lễ Tân Hôn (Nhà trai / Tiệc)</h3>
+            <p class="line"><strong>Thời gian:</strong> <span id="groomCeremonyTime">18:00 • 20/02/2026</span></p>
+            <p class="line"><strong>Địa chỉ:</strong> <span id="groomCeremonyAddr">...</span></p>
+
+            <div class="map-wrap">
+              <iframe id="mapGroom" title="Bản đồ nhà trai" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=Ho%20Chi%20Minh%20City&output=embed"></iframe>
+            </div>
+
+            <a id="mapGroomLink" class="btn btn-small" target="_blank" rel="noopener">
+              Mở Google Maps
+            </a>
+          </article>
+        </div>
+
+        <div class="note">
+          <p>
+            Rất hân hạnh được đón tiếp quý khách. Sự hiện diện của quý khách là niềm vinh dự cho gia đình chúng tôi.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <h2 class="section-title">Lời Cảm Ơn</h2>
+        <div class="panel">
+          <p id="thanksText" class="thanks">
+            Chúng tôi xin chân thành cảm ơn quý quan khách đã dành thời gian đến chung vui và gửi lời chúc phúc.
+            Kính chúc quý khách sức khỏe, hạnh phúc và bình an.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Sổ Lưu Bút</h2>
+        <p class="section-desc">Nhập tên và lời chúc. Khi gửi sẽ bắn pháo hoa và lưu lại ngay bên dưới.</p>
+
+        <form id="guestbookForm" class="guestbook" autocomplete="off">
+          <div class="row">
+            <label class="field">
+              <span>Tên của bạn</span>
+              <input id="guestName" type="text" placeholder="Ví dụ: Minh Anh" maxlength="40" required />
+            </label>
+
+            <label class="field">
+              <span>Lời chúc</span>
+              <input id="guestWish" type="text" placeholder="Gửi lời chúc đến cô dâu chú rể..." maxlength="160" required />
+            </label>
+          </div>
+
+          <button class="btn btn-primary" type="submit">Gửi lời chúc</button>
+        </form>
+
+        <div class="wishes">
+          <h3 class="wishes-title">Lời chúc đã gửi</h3>
+          <div id="wishesList" class="wishes-list" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <h2 class="section-title">Hộp Mừng Cưới</h2>
+        <!-- <p class="section-desc">Bạn thay ảnh QR bằng file thật (ví dụ: <code>qr-bride.png</code>, <code>qr-groom.png</code>).</p> -->
+
+        <div class="grid-2">
+          <div class="panel qr">
+            <h3>QR Cô Dâu</h3>
+            <div class="qr-box">
+              <img id="qrBride" src="qr-bride.png" alt="QR ngân hàng cô dâu" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+              <div class="qr-placeholder">Chưa có ảnh QR<br/>Đặt file <strong>qr-bride.png</strong></div>
+            </div>
+            <p class="muted small" id="brideBankText">Ngân hàng: ... • STK: ... • Chủ TK: ...</p>
+          </div>
+
+          <div class="panel qr">
+            <h3>QR Chú Rể</h3>
+            <div class="qr-box">
+              <img id="qrGroom" src="qr-groom.png" alt="QR ngân hàng chú rể" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+              <div class="qr-placeholder">Chưa có ảnh QR<br/>Đặt file <strong>qr-groom.png</strong></div>
+            </div>
+            <p class="muted small" id="groomBankText">Ngân hàng: ... • STK: ... • Chủ TK: ...</p>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <p class="muted">Hẹn gặp bạn trong ngày vui của chúng tôi.</p>
+          <a class="to-top" href="#top">Lên đầu trang</a>
+        </footer>
+      </div>
+    </section>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Xem ảnh">
+    <button id="lbClose" class="lb-close" type="button" aria-label="Đóng">×</button>
+    <img id="lbImg" alt="Ảnh cưới" />
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
