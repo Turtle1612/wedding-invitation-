@@ -3,8 +3,8 @@
 ========================= */
 const INVITE = {
   bride: {
-    shortName: "CÔ DÂU",
-    fullName: "Nguyễn Thị A",
+    shortName: "Mỹ Kim",
+    fullName: "Đỗ Mỹ Kim",
     role: "Út nữ", // "Trưởng nữ" | "Thứ nữ" | "Út nữ"
     grandpa: "Ông ...",
     grandma: "Bà ...",
@@ -15,8 +15,8 @@ const INVITE = {
     mapQuery: "Ho Chi Minh City",
   },
   groom: {
-    shortName: "CHÚ RỂ",
-    fullName: "Trần Văn B",
+    shortName: "Tuấn Khang",
+    fullName: "Châu Tuấn Khang",
     role: "Út nam", // "Trưởng nam" | "Thứ nam" | "Út nam"
     grandpa: "Ông ...",
     grandma: "Bà ...",
@@ -193,8 +193,8 @@ function stopAutoScrollForever(reason = "") {
   if (note) {
     note.textContent =
       reason === "bottom"
-        ? "Đã tới cuối thiệp. Auto-scroll dừng lại."
-        : "Auto-scroll đã tắt. Bạn có thể cuộn như bình thường.";
+        ? "Đã tới cuối thiệp."
+        : "Bạn có thể xem thiệp theo ý muốn.";
   }
 }
 

@@ -214,6 +214,11 @@ code{
   letter-spacing: .05em;
   text-shadow: 0 14px 40px rgba(0,0,0,.5);
 }
+.names span {
+  display: block;
+  text-align: center;
+}
+
 .amp{
   display:inline-block;
   margin: 0 .35em;
@@ -341,6 +346,7 @@ code{
 
 .hero-names{
   margin: 0 0 10px;
+  text-align: center;
   font-size: clamp(34px, 6vw, 64px);
   line-height: 1.05;
   letter-spacing: .02em;
@@ -552,6 +558,7 @@ code{
   padding: 14px 16px;
   background: rgba(255,210,122,.06);
   border: 1px solid rgba(255,210,122,.16);
+  align-items:center;
 }
 
 /* Guestbook */
